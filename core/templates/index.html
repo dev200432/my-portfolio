@@ -153,20 +153,33 @@
     </section>
 
     <section id="projects">
-        <h2 class="title">Featured Projects</h2>
-        <div class="grid">
+        <h2 class="title">Featured Projects & GitHub Repos</h2>
+        
+        <!-- Database Projects -->
+        <div class="grid" style="margin-bottom: 30px;">
             {% for project in projects %}
             <div class="card">
                 <h3>{{ project.title }}</h3>
                 <p>{{ project.description }}</p>
                 <span class="tag">{{ project.technologies }}</span>
             </div>
-            {% empty %}
+            {% endfor %}
+        </div>
+
+        <!-- GitHub Live Repositories -->
+        <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.4rem;"><i class="fab fa-github"></i> Public Repositories from GitHub</h3>
+        <div class="grid">
+            {% for repo in github_repos %}
             <div class="card">
-                <h3>Dynamic Portfolio Website</h3>
-                <p>Full-stack portfolio app powered by Django, MySQL, HTML, CSS & JS.</p>
-                <span class="tag">Django, MySQL, JS</span>
+                <h3><a href="{{ repo.html_url }}" target="_blank" style="color: var(--primary); text-decoration: none;">{{ repo.name }} <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i></a></h3>
+                <p>{{ repo.description }}</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                    <span class="tag">{{ repo.language }}</span>
+                    <span style="color: var(--text); font-size: 0.9rem;"><i class="fas fa-star" style="color: gold;"></i> {{ repo.stargazers_count }}</span>
+                </div>
             </div>
+            {% empty %}
+            <p style="color: var(--text);">No GitHub repositories found or API limit reached.</p>
             {% endfor %}
         </div>
     </section>
