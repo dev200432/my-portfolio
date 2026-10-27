@@ -111,13 +111,22 @@
                 <a href="#contact">Contact</a>
             </nav>
             
-            <!-- Clean Instagram Nav Link -->
+            <!-- Instagram Icon Only -->
             <a href="https://www.instagram.com/devgoswami.09" 
                target="_blank" 
                rel="noopener noreferrer" 
-               style="color: var(--text); text-decoration: none; margin-left: 20px; transition: 0.3s; display: inline-flex; align-items: center; gap: 6px;">
-               <i class="fab fa-instagram" style="color: #e1306c; font-size: 1.1rem;"></i>
-               <span>Instagram</span>
+               title="Instagram"
+               style="color: var(--text); text-decoration: none; margin-left: 20px; transition: 0.3s; display: inline-flex; align-items: center;">
+               <i class="fab fa-instagram" style="color: #e1306c; font-size: 1.3rem;"></i>
+            </a>
+
+            <!-- LinkedIn Icon Only -->
+            <a href="https://www.linkedin.com/in/devansh-giri-g-502166341" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               title="LinkedIn"
+               style="color: var(--text); text-decoration: none; margin-left: 15px; transition: 0.3s; display: inline-flex; align-items: center;">
+               <i class="fab fa-linkedin" style="color: #0a66c2; font-size: 1.3rem;"></i>
             </a>
 
             <button class="theme-toggle" id="themeToggle" title="Toggle Theme"><i class="fas fa-moon"></i></button>
@@ -126,8 +135,8 @@
 
    <section class="hero visible" style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 40px; text-align: left;">
         <div style="flex: 1; min-width: 280px;">
-            <h1 style="font-size: 3rem;">Hi, I'm <span style="color: var(--primary);">{{ profile.name|default:"Developer" }}</span></h1>
-            <p id="typewriter" style="font-size: 1.2rem; margin: 15px 0;"></p>
+            <h1 style="font-size: 3.2rem;">Hi, I'm <span style="color: var(--primary);">{{ profile.name|default:"Developer" }}</span></h1>
+            <p id="typewriter" style="font-size: 1.3rem; margin: 15px 0;"></p>
             <a href="#contact" class="btn">Get In Touch</a>
         </div>
         <div style="flex: 1; display: flex; justify-content: center; min-width: 250px;">
