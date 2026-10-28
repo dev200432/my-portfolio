@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Profile, Skill, Project, ContactMessage
 
-# Resend API Key set karein
+
 resend.api_key = os.environ.get('RESEND_API_KEY')
 
 def home(request):
@@ -14,12 +14,12 @@ def home(request):
         subject = request.POST.get('subject')
         message = request.POST.get('message')
 
-        # 1. Database mein save karein (Admin Panel ke liye)
+        
         ContactMessage.objects.create(
             name=name, email=email, subject=subject, message=message
         )
 
-        # 2. Resend API ke zariye direct Gmail par email bhejein
+        
         try:
             params = {
                 "from": "onboarding@resend.dev",
