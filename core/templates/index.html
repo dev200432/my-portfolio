@@ -29,29 +29,57 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-        body { background: var(--bg); color: var(--text); line-height: 1.6; transition: var(--transition); }
+        body { background: var(--bg); color: var(--text); line-height: 1.6; transition: var(--transition); overflow-x: hidden; }
 
         header {
-            position: fixed; top: 0; width: 100%; padding: 20px 8%;
+            position: fixed; top: 0; width: 100%; padding: 18px 8%;
             display: flex; justify-content: space-between; align-items: center;
             background: var(--bg); backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border); z-index: 1000; transition: var(--transition);
         }
 
         .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
-        .nav-links { display: flex; align-items: center; }
-        nav a { color: var(--text); text-decoration: none; margin-left: 20px; transition: 0.3s; }
+        
+        .nav-links { 
+            display: flex; 
+            align-items: center; 
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a { color: var(--text); text-decoration: none; margin-left: 25px; transition: 0.3s; font-weight: 500; }
         nav a:hover { color: var(--primary); }
 
         .theme-toggle {
             background: none; border: 1px solid var(--border); color: var(--text);
             padding: 8px 12px; border-radius: 50%; cursor: pointer; margin-left: 20px; transition: 0.3s;
+            display: inline-flex; align-items: center; justify-content: center;
         }
         .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
 
+        /* Hamburger Menu Icon for Mobile */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--heading);
+            font-size: 1.6rem;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
         .hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 0 20px;
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-around; 
+            flex-wrap: wrap; 
+            gap: 40px; 
+            text-align: left; 
+            padding: 120px 8% 60px 8%; /* Top padding added so header doesn't overlap */
         }
 
         .hero h1 { font-size: 3.2rem; color: var(--heading); margin-bottom: 10px; }
@@ -77,9 +105,42 @@
         .card {
             background: var(--card-bg); border: 1px solid var(--border);
             padding: 25px; border-radius: 8px; transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
         .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .card h3 { color: var(--heading); margin-bottom: 10px; }
+
+        /* Project Description Accordion / Toggle Styles */
+        .project-desc-container {
+            position: relative;
+            margin: 10px 0;
+        }
+        .project-desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Show only 3 lines initially */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: max-height 0.3s ease;
+        }
+        .project-desc.expanded {
+            display: block;
+            -webkit-line-clamp: unset;
+        }
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 5px;
+            padding: 0;
+            display: inline-block;
+        }
+        .read-more-btn:hover {
+            text-decoration: underline;
+        }
 
         .tag {
             display: inline-block; background: rgba(88, 166, 255, 0.1);
@@ -94,46 +155,87 @@
         form { max-width: 550px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         input, textarea {
             padding: 14px; background: var(--card-bg); border: 1px solid var(--border);
-            color: var(--text); border-radius: 6px; outline: none; transition: 0.3s;
+            color: var(--text); border-radius: 6px; outline: none; transition: 0.3s; width: 100%;
         }
         input:focus, textarea:focus { border-color: var(--primary); }
+
+        /* Responsive Navbar Media Query */
+        @media (max-width: 900px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 30px;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease-in-out;
+            }
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            nav {
+                flex-direction: column;
+                width: 100%;
+                align-items: flex-start;
+            }
+            nav a {
+                margin: 10px 0;
+                margin-left: 0;
+                font-size: 1.1rem;
+            }
+            .nav-links > a, .nav-links > button {
+                margin: 12px 0 0 0 !important;
+            }
+            .hero h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body data-theme="dark">
 
     <header>
         <div class="logo">{{ profile.name|default:"Portfolio" }}</div>
-        <div class="nav-links">
-            <nav>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </nav>
-            
-            
-            <a href="https://www.instagram.com/devgoswami.09" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               title="Instagram"
-               style="color: var(--text); text-decoration: none; margin-left: 20px; transition: 0.3s; display: inline-flex; align-items: center;">
-               <i class="fab fa-instagram" style="color: #e1306c; font-size: 1.3rem;"></i>
-            </a>
+        
+        <div style="display: flex; align-items: center;">
+            <div class="nav-links" id="navLinks">
+                <nav>
+                    <a href="#about" class="nav-item">About</a>
+                    <a href="#skills" class="nav-item">Skills</a>
+                    <a href="#projects" class="nav-item">Projects</a>
+                    <a href="#contact" class="nav-item">Contact</a>
+                </nav>
+                
+                <a href="https://www.instagram.com/devgoswami.09" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   title="Instagram"
+                   style="color: var(--text); text-decoration: none; margin-left: 20px; transition: 0.3s; display: inline-flex; align-items: center;">
+                   <i class="fab fa-instagram" style="color: #e1306c; font-size: 1.3rem;"></i>
+                </a>
 
-            
-            <a href="https://www.linkedin.com/in/devansh-giri-g-502166341" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               title="LinkedIn"
-               style="color: var(--text); text-decoration: none; margin-left: 15px; transition: 0.3s; display: inline-flex; align-items: center;">
-               <i class="fab fa-linkedin" style="color: #0a66c2; font-size: 1.3rem;"></i>
-            </a>
+                <a href="https://www.linkedin.com/in/devansh-giri-g-502166341" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   title="LinkedIn"
+                   style="color: var(--text); text-decoration: none; margin-left: 15px; transition: 0.3s; display: inline-flex; align-items: center;">
+                   <i class="fab fa-linkedin" style="color: #0a66c2; font-size: 1.3rem;"></i>
+                </a>
 
-            <button class="theme-toggle" id="themeToggle" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+            </div>
+
+            <button class="hamburger" id="hamburger" title="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
-   <section class="hero visible" style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 40px; text-align: left;">
+    <section class="hero visible">
         <div style="flex: 1; min-width: 280px;">
             <h1 style="font-size: 3.2rem;">Hi, I'm <span style="color: var(--primary);">{{ profile.name|default:"Developer" }}</span></h1>
             <p id="typewriter" style="font-size: 1.3rem; margin: 15px 0;"></p>
@@ -179,22 +281,25 @@
         <h2 class="title">My Deployed Projects</h2>
         <div class="grid">
             {% for project in projects %}
-            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="card">
                 <div>
                     <h3>{{ project.title }}</h3>
-                    <p style="margin: 10px 0;">{{ project.description }}</p>
+                    <div class="project-desc-container">
+                        <p class="project-desc" id="desc-{{ forloop.counter }}">{{ project.description }}</p>
+                        <button class="read-more-btn" onclick="toggleDescription('desc-{{ forloop.counter }}', this)">Read More</button>
+                    </div>
                     <span class="tag">{{ project.technologies }}</span>
                 </div>
-              <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="{{ project.live_demo|default:'#' }}" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.9rem; text-decoration: none;">
-                    <i class="fas fa-external-link-alt"></i> Live Demo
-                </a>
-                {% if project.github_link %}
-                <a href="{{ project.github_link }}" target="_blank" class="theme-toggle" style="border-radius: 6px; padding: 8px 16px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; margin-left: 0;">
-                    <i class="fab fa-github"></i> Code
-                </a>
-                {% endif %}
-            </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="{{ project.live_demo|default:'#' }}" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.9rem; text-decoration: none;">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="theme-toggle" style="border-radius: 6px; padding: 8px 16px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; margin-left: 0;">
+                        <i class="fab fa-github"></i> Code
+                    </a>
+                    {% endif %}
+                </div>
             </div>
             {% empty %}
             <p style="text-align: center; color: var(--text);">No projects added yet. Go to Admin panel to add your deployed projects!</p>
@@ -220,7 +325,7 @@
     </section>
 
     <script>
-        
+        // Theme Toggle Functionality
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const icon = themeToggle.querySelector('i');
@@ -235,7 +340,41 @@
             }
         });
 
-        
+        // Mobile Hamburger Navbar Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const iconElem = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                iconElem.classList.replace('fa-bars', 'fa-times');
+            } else {
+                iconElem.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // Close navbar on clicking any link on mobile
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.querySelector('i').classList.replace('fa-times', 'fa-bars');
+            });
+        });
+
+        // Project Description Read More / Read Less Toggle Functionality
+        function toggleDescription(descId, btn) {
+            const descElement = document.getElementById(descId);
+            descElement.classList.toggle('expanded');
+            if (descElement.classList.contains('expanded')) {
+                btn.textContent = "Read Less";
+            } else {
+                btn.textContent = "Read More";
+            }
+        }
+
+        // Typewriter Effect
         const words = ["Python & Django Developer", "Full-Stack Web Engineer", "MySQL & Database Specialist", "UI/UX & Frontend Designer"];
         let i = 0, j = 0, currentWord = "", isDeleting = false;
         function type() {
@@ -257,7 +396,7 @@
         }
         type();
 
-    
+        // Scroll Observer for Fade-in & Progress Bars
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
