@@ -1,4 +1,4 @@
-// Theme Toggle Functionality
+
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 const icon = themeToggle.querySelector('i');
@@ -13,7 +13,7 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
-// Mobile Hamburger Navbar Toggle
+
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 const navItems = document.querySelectorAll('.nav-item');
@@ -28,7 +28,7 @@ hamburger.addEventListener('click', () => {
     }
 });
 
-// Close navbar on clicking any link on mobile
+
 navItems.forEach(item => {
     item.addEventListener('click', () => {
         navLinks.classList.remove('active');
@@ -36,7 +36,6 @@ navItems.forEach(item => {
     });
 });
 
-// Project Description Read More / Read Less Toggle Functionality
 function toggleDescription(descId, btn) {
     const descElement = document.getElementById(descId);
     descElement.classList.toggle('expanded');
@@ -47,7 +46,6 @@ function toggleDescription(descId, btn) {
     }
 }
 
-// Typewriter Effect
 const words = ["Python & Django Developer", "Full-Stack Web Engineer", "MySQL & Database Specialist", "UI/UX & Frontend Designer"];
 let i = 0, j = 0, currentWord = "", isDeleting = false;
 function type() {
@@ -69,7 +67,7 @@ function type() {
 }
 type();
 
-// Scroll Observer for Fade-in & Progress Bars
+
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
